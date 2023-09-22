@@ -1,8 +1,9 @@
+<%@page errorPage="/WEB-INF/manejoErrores.jsp" %>
 <%@page import="utilerias.Conversiones, java.util.Date" %>
 <%@page contentType = "application/vnd.ms-excel"%>
 
 <% String nombreArchivo = "repote.xls";
-   response.setHeader("Content-Disposition", "attachment;filename=" + nombreArchivo);
+   response.setHeader("Content-Disposition", "inline;filename=" + nombreArchivo);
 %>
 
 
@@ -25,7 +26,7 @@
             <tr> 
                 <th>1. Fundamentos de Java </th>        
                 <th> Aprendemos la sintaxis basica de Java</th>
-                <th> <%= Conversiones.format(new Date()) %> </th>
+                <th> <%= Conversiones.format("500") %> </th>
             </tr>
 
 
