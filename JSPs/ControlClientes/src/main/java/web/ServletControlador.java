@@ -21,6 +21,10 @@ public class ServletControlador extends HttpServlet {
                 case "editar":
                     this.editarCliente(request, response);
                     break;
+
+                case "eliminar":
+                    this.eliminarCliente(request, response);
+                    break;
                 default:
                     this.accionDefault(request, response);
             }
@@ -67,7 +71,6 @@ public class ServletControlador extends HttpServlet {
         System.out.println("Teléfono: " + cliente.getTelefono());
         System.out.println("Saldo: " + cliente.getSaldo());
 
-
 // Establecer el cliente como atributo en la solicitud
         request.setAttribute("cliente", cliente);
 
@@ -82,8 +85,11 @@ public class ServletControlador extends HttpServlet {
         if (accion != null) {
             switch (accion) {
                 case "insertar":
-
                     this.insertarCliente(request, response);
+                    break;
+
+                case "modificar":
+                    this.modificarCliente(request, response);
                     break;
 
                 default:
@@ -113,6 +119,47 @@ public class ServletControlador extends HttpServlet {
 
         //Insertamos el nuevo objeto en la base de datos
         int registrosModificados = new ClienteDaoJDBC().insertar(cliente);
+        System.out.println("registrosModificados = " + registrosModificados);
+
+        //Redireccionamos a accion por defaul
+        this.accionDefault(request, response);
+    }
+
+    private void modificarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Recuperamos valores del formulario de editar cliente 
+
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String email = request.getParameter("email");
+        String telefono = request.getParameter("telefono");
+        double saldo = 0;
+        String saldoString = request.getParameter("saldo");
+        if (saldoString != null & !"".equals(saldoString)) {
+            saldo = Double.parseDouble(saldoString);
+        }
+
+        //Actualizamos el objeto de cliente (modelo)
+        Cliente cliente = new Cliente(idCliente, nombre, apellido, email, telefono, saldo);
+
+        //Insertamos el nuevo objeto en la base de datos
+        int registrosModificados = new ClienteDaoJDBC().actualizar(cliente);
+        System.out.println("registrosModificados = " + registrosModificados);
+
+        //Redireccionamos a accion por defaul
+        this.accionDefault(request, response);
+    }
+
+    private void eliminarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Recuperamos valores del formulario de editar cliente 
+
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+
+        //Actualizamos el objeto de cliente (modelo)
+        Cliente cliente = new Cliente(idCliente);
+
+        //Eliminamos el nuevo objeto en la base de datos
+        int registrosModificados = new ClienteDaoJDBC().eliminar(cliente);
         System.out.println("registrosModificados = " + registrosModificados);
 
         //Redireccionamos a accion por defaul
