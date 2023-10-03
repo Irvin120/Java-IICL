@@ -14,8 +14,6 @@
 
             <form action="${pageContext.request.contextPath}/ServletControlador?accion=modificar&idCliente=${cliente.idCliente}"
               method="POST" class="was-validated">
-            <h1>${cliente.idCliente}</h1>            
-            <h1>${cliente.nombre}</h1>
 
             <!-- Boton de navegacion Edicion -->
             <jsp:include page="/WEB-INF/paginas/comunes/botonesNavegacionEdicion.jsp"></jsp:include>
@@ -39,7 +37,7 @@
                                         <label for="telefono">Teléfono</label>
                                         <input type="tel" class="form-control" name="telefono" required value="${cliente.telefono}">
                                         <label for="saldo">Saldo</label>
-                                        <input type="number" class="form-control" name="saldo" required value="${cliente.saldo}">
+                                        <input type="number" class="form-control" name="saldo" required value="${cliente.saldo}" step="any">
                                     </div>
                                 </div>
                             </div>
